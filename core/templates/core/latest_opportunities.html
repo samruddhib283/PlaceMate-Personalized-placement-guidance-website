@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center mb-4">🎯 Latest Opportunities</h2>
+  {% if opportunities %}
+    <div class="row">
+      {% for opp in opportunities %}
+        <div class="col-md-6 mb-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title">{{ opp.title }}</h5>
+              <p class="card-text">
+                <strong>Category:</strong> {{ opp.category }}<br>
+                <strong>Last Date:</strong> {{ opp.last_date }}
+              </p>
+              <a href="{{ opp.apply_link }}" class="btn btn-primary" target="_blank">Apply Now</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="text-center">
+      <a href="{% url 'all_opportunities' %}" class="btn btn-outline-success mt-3">
+        View More Opportunities →
+      </a>
+    </div>
+  {% else %}
+    <p class="text-center">No current opportunities available.</p>
+  {% endif %}
+</div>
+{% endblock %}

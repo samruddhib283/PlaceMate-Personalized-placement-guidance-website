@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card p-4 shadow">
+        <h3>📄 Upload Your Resume</h3>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success">Upload Resume</button>
+        </form>
+
+        {% if feedback %}
+        <div class="mt-4 alert alert-info">
+            <h5>🔍 AI Feedback:</h5>
+            <ul>
+                {% for line in feedback %}
+                <li>{{ line }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

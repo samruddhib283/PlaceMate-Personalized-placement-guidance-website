@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>📋 Resume Status</h2>
+  {% for resume in resumes %}
+    <div class="card mt-3 p-3">
+      <p><strong>Uploaded:</strong> {{ resume.submitted_at }}</p>
+      <p><strong>Feedback:</strong> {{ resume.feedback|default:"Pending Review" }}</p>
+    </div>
+  {% empty %}
+    <p>You haven't uploaded any resumes yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

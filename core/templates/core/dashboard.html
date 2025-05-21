@@ -1,0 +1,89 @@
+{% extends 'core/base.html' %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'core/dashboard.css' %}">
+
+{% block content %}
+<div class="container py-5 text-center">
+
+  <h1 class="display-4 fw-bold mb-2">🚀 Welcome to Your Career Dashboard</h1>
+  <p class="lead text-secondary mb-5">Your one-stop destination for placement preparation</p>
+
+  <div class="row g-4 justify-content-center">
+    <!-- AI Interview Practice -->
+    <div class="col-sm-6 col-md-4">
+      <div class="card h-100 shadow-sm border-0 p-4 bg-light">
+        <h3>🎤 AI Interview Practice</h3>
+        <p>Practice real interview questions with voice.</p>
+        <a href="{% url 'voice_interview' %}" class="btn btn-primary mt-3">Start Practicing</a>
+      </div>
+    </div>
+
+    <!-- Latest Opportunities -->
+    <div class="col-sm-6 col-md-4">
+      <div class="card h-100 shadow-sm border-0 p-4" style="background-color: #fff8dc;">
+        <h3>📢 Latest Opportunities</h3>
+        <p>Get the newest job/internship alerts.</p>
+        <a href="{% url 'latest_opportunities' %}" class="btn btn-success mt-3">View Now</a>
+      </div>
+    </div>
+
+    <!-- Resume Review -->
+    <div class="col-sm-6 col-md-4">
+      <div class="card h-100 shadow-sm border-0 p-4" style="background-color: #ffe6e6; text-align: center;">
+        <h3>📄 Resume Review</h3>
+        <p>Build a strong professional resume easily.</p>
+        <a href="{% url 'upload_resume' %}" class="btn btn-purple mt-3">Upload Your Resume</a>
+      </div>
+    </div>
+
+    <!-- Career Roadmaps -->
+    <div class="col-sm-6 col-md-4">
+      <div class="card h-100 shadow-sm border-0 p-4" style="background-color: #e6ffe6;">
+        <h3>🗺️ Career Roadmaps</h3>
+        <p>Plan your journey from beginner to expert.</p>
+        <a href="#" class="btn btn-warning mt-3 text-white">Explore</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center my-5">
+    <a href="{% url 'calm_zone' %}" class="btn btn-success btn-lg px-5">
+      <span class="fs-3 me-2">🌿</span> Enter Calm Zone
+    </a>
+  </div>
+
+  <h2 class="text-center mb-4">🌟 Success Stories</h2>
+  <div class="row justify-content-center g-4">
+    {% for story in stories %}
+    <div class="col-sm-6 col-md-4">
+      <div class="card h-100 shadow-sm border-0 position-relative">
+        {% if story.image %}
+        <img src="{{ story.image.url }}" alt="{{ story.name }}" 
+             class="card-img-top rounded mx-auto d-block" 
+             style="height: 300px; width: 200px; object-fit: cover;">
+        {% endif %}
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title mb-1">{{ story.name }}</h5>
+          <p class="text-muted mb-1"><strong>{{ story.position }}</strong> @ {{ story.company }}</p>
+
+          <div class="collapse" id="story-{{ story.id }}">
+            <p class="card-text mt-2">{{ story.story }}</p>
+          </div>
+          <button class="btn btn-link p-0 mt-auto text-primary" type="button" data-bs-toggle="collapse" 
+                  data-bs-target="#story-{{ story.id }}" aria-expanded="false" aria-controls="story-{{ story.id }}">
+            Read Full Story
+          </button>
+
+          {% if story.video_link %}
+          <a href="{{ story.video_link }}" target="_blank" class="btn btn-sm btn-outline-primary mt-3">🎥 Watch Story</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-muted text-center">No success stories yet. Be the first!</p>
+    {% endfor %}
+  </div>
+
+</div>
+{% endblock %}

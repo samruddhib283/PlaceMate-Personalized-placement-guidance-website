@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@botui/react": "^1.1.5",
+    "botui": "^1.1.3"
+  }
+}

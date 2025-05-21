@@ -1,0 +1,116 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h2 class="mb-4">🌿 Calm Zone Chatbot</h2>
+    <div id="botui-app" class="d-flex justify-content-center my-4">
+        <bot-ui></bot-ui>
+      </div>
+      
+      
+    
+<!-- BotUI CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/botui/build/botui.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/botui/build/botui-theme-default.css">
+
+<!-- Vue.js -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+
+<!-- BotUI JS -->
+<script src="https://cdn.jsdelivr.net/npm/botui/build/botui.min.js"></script>
+
+
+<!-- Your Bot Logic -->
+<script>
+    var botui = new BotUI('botui-app');
+  
+    botui.message.add({
+      content: '🌿 Welcome to the Calm Zone!'
+    }).then(function () {
+      return botui.message.add({
+        content: 'Let’s take a moment to check in with yourself.'
+      });
+    }).then(function () {
+      return botui.message.add({
+        content: 'How are you feeling right now?'
+      });
+    }).then(function () {
+      return botui.action.button({
+        action: [
+          { text: '😟 Anxious', value: 'anxious' },
+          { text: '😣 Stressed', value: 'stressed' },
+          { text: '😔 Low', value: 'low' },
+          { text: '😐 Okay', value: 'okay' },
+          { text: '😊 Good', value: 'good' }
+        ]
+      });
+    }).then(function (res) {
+      if (res.value === 'anxious') {
+        return botui.message.add({
+          content: 'Let’s calm those nerves with a breathing video: [Watch here](https://youtu.be/O-6f5wQXSu8)'
+        });
+      } else if (res.value === 'stressed') {
+        return botui.message.add({
+          content: 'Try this 5-minute stress relief guide: [Watch here](https://youtu.be/ZToicYcHIOU)'
+        });
+      } else if (res.value === 'low') {
+        return botui.message.add({
+          content: 'It’s okay to feel low. Try writing 3 things you’re grateful for today.'
+        }).then(function () {
+          return botui.action.text({
+            action: {
+              placeholder: 'I’m grateful for...'
+            }
+          });
+        }).then(function (res) {
+          return botui.message.add({
+            content: `🌟 That’s beautiful. Thank you for sharing: "${res.value}"`
+          });
+        });
+      } else if (res.value === 'okay') {
+        return botui.message.add({
+          content: 'Let’s try to turn “okay” into “better”! How about a short motivation video: [Watch here](https://youtu.be/ZXsQAXx_ao0)'
+        });
+      } else if (res.value === 'good') {
+        return botui.message.add({
+          content: 'That’s wonderful to hear! Keep up the great vibes 🌞'
+        });
+      }
+    }).then(function () {
+      return botui.message.add({
+        content: '💬 Would you like to check out a quote or calming activity?'
+      });
+    }).then(function () {
+      return botui.action.button({
+        action: [
+          { text: '📖 Quote', value: 'quote' },
+          { text: '🧘 Breathing Exercise', value: 'breathe' },
+          { text: '📝 Journal Prompt', value: 'journal' },
+          { text: '🚪 Exit', value: 'exit' }
+        ]
+      });
+    }).then(function (res) {
+      if (res.value === 'quote') {
+        return botui.message.add({
+          content: '“You are not a drop in the ocean. You are the entire ocean in a drop.” – Rumi'
+        });
+      } else if (res.value === 'breathe') {
+        return botui.message.add({
+          content: 'Try this calming 1-minute breathing video: [Watch here](https://youtu.be/SEfs5TJZ6Nk)'
+        });
+      } else if (res.value === 'journal') {
+        return botui.message.add({
+          content: '📝 Journal Prompt: "What made you smile this week?"'
+        });
+      } else {
+        return botui.message.add({
+          content: '🌸 Thank you for spending a mindful moment. Come back anytime!'
+        });
+      }
+    });
+  </script>
+  
+  
+
+{% endblock %}

@@ -1,0 +1,16 @@
+# Python/Django
+*.pyc
+__pycache__/
+db.sqlite3
+.env
+
+# Static/media (optional if dynamically generated)
+staticfiles/
+media/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
