@@ -26,7 +26,4 @@ PlaceMate is a smart and student-friendly placement guidance web application bui
 
 ---
 
-## 📷 Screenshots
-
-> You can add screenshots here using:
 
