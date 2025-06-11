@@ -59,9 +59,12 @@ from openai import OpenAI
 import tempfile
 
 # Initialize OpenAI client
-client = OpenAI(api_key = "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")  # Use env var in prod!)
+from dotenv import load_dotenv
+load_dotenv()
 
-#openai.api_key = "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"  # Use env var in prod!
+import os
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
 
 questions = {
     'easy': [
