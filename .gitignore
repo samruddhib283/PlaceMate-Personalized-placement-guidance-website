@@ -5,7 +5,7 @@ db.sqlite3
 .env
 
 # Static/media (optional if dynamically generated)
-staticfiles/
+staticfiles/    ``
 media/
 
 # IDE

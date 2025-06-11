@@ -1,7 +1,13 @@
 from django import forms
 from .models import ResumeSubmission
 
-class Resume(forms.ModelForm):
-    class Meta:
-        model = ResumeSubmission
-        fields = ['name', 'email', 'resume_file']
+
+class ResumeUploadForm(forms.Form):
+    resume_file = forms.FileField(
+        label="Upload Resume",
+        widget=forms.ClearableFileInput(attrs={
+            'class': 'form-control',
+            'accept': '.pdf,.docx'
+        })
+    )
+

@@ -2,25 +2,154 @@
 {% load static %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="card p-4 shadow">
-        <h3>📄 Upload Your Resume</h3>
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-success">Upload Resume</button>
-        </form>
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    background: linear-gradient(120deg, #dbeafe 0%, #f0fdfa 100%);
+    font-family: 'Poppins', sans-serif;
+    color: #1f2937;
+  }
 
-        {% if feedback %}
-        <div class="mt-4 alert alert-info">
-            <h5>🔍 AI Feedback:</h5>
-            <ul>
-                {% for line in feedback %}
-                <li>{{ line }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
+  .page-center {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .card {
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 24px;
+    box-shadow: 0 15px 40px rgba(30, 64, 175, 0.15);
+    padding: 3rem 2.5rem;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 30px 60px rgba(30, 64, 175, 0.25);
+  }
+
+  h2 {
+    font-weight: 700;
+    color: #2563eb;
+    margin-bottom: 0.5rem;
+  }
+
+  p.subtitle {
+    color: #4b5563;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  label.form-label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.5rem;
+    text-align: left;
+  }
+
+  input[type="file"].form-control {
+    width: 100%;
+    border-radius: 12px;
+    padding: 12px;
+    border: 2px solid #cbd5e1;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  input[type="file"].form-control:hover {
+    border-color: #3b82f6;
+  }
+  input[type="file"].form-control:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+    outline: none;
+  }
+
+  .btn-primary {
+    background-color: #2563eb;
+    border: none;
+    font-weight: 600;
+    border-radius: 14px;
+    padding: 14px 30px;
+    font-size: 1.1rem;
+    color: white;
+    box-shadow: 0 8px 15px rgba(37, 99, 235, 0.3);
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    margin-top: 1.5rem;
+  }
+  .btn-primary:hover, .btn-primary:focus {
+    background-color: #1d4ed8;
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.5);
+    transform: translateY(-2px);
+  }
+
+  /* Feedback box */
+  .alert-success {
+    background: #d1fae5;
+    border: 2px solid #10b981;
+    color: #065f46;
+    border-radius: 18px;
+    padding: 1.5rem 2rem;
+    margin-top: 2.5rem;
+    text-align: left;
+    white-space: pre-line;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+  }
+  .alert-success h5 {
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+
+  /* Small helper text below file input */
+  .helper-text {
+    color: #6b7280;
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+    text-align: left;
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 480px) {
+    .card {
+      padding: 2rem 1.5rem;
+    }
+    .btn-primary {
+      width: 100%;
+      padding: 14px 0;
+      font-size: 1rem;
+    }
+  }
+</style>
+
+<div class="page-center">
+  <div class="card" role="main" aria-label="Resume review form">
+    <h2>📄 Resume Review Tool</h2>
+    <p class="subtitle">Upload your resume to get personalized, professional feedback instantly.</p>
+
+    <form method="post" enctype="multipart/form-data" novalidate>
+      {% csrf_token %}
+      <label for="id_resume_file" class="form-label">Upload Your Resume (PDF or DOCX)</label>
+      {{ form.resume_file }}
+      <div class="helper-text">Max size: 5MB • No special characters in filename</div>
+
+      <button type="submit" class="btn-primary" aria-label="Submit resume for feedback">
+        Get Feedback
+      </button>
+    </form>
+
+    {% if feedback %}
+    <div class="alert-success" role="alert" tabindex="0">
+      <h5>💡 Feedback:</h5>
+      <p>{{ feedback }}</p>
     </div>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}

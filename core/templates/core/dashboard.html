@@ -1,89 +1,867 @@
-{% extends 'core/base.html' %}
-{% load static %}
-<link rel="stylesheet" href="{% static 'core/dashboard.css' %}">
 
-{% block content %}
-<div class="container py-5 text-center">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3B82F6;
+            --primary-dark: #2563EB;
+            --primary-light: #DBEAFE;
+            --secondary: #8B5CF6;
+            --secondary-dark: #7C3AED;
+            --accent: #0EA5E9;
+            --success: #10B981;
+            --success-dark: #059669;
+            --success-light: #D1FAE5;
+            --warning: #F59E0B;
+            --warning-dark: #D97706;
+            --warning-light: #FEF3C7;
+            --error: #EF4444;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+            --radius: 0.5rem;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --transition: all 0.3s ease;
+        }
 
-  <h1 class="display-4 fw-bold mb-2">🚀 Welcome to Your Career Dashboard</h1>
-  <p class="lead text-secondary mb-5">Your one-stop destination for placement preparation</p>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
 
-  <div class="row g-4 justify-content-center">
+        body {
+            background-color: var(--gray-50);
+            color: var(--gray-800);
+            line-height: 1.5;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--gray-900);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            animation: fadeIn 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .feature-card:nth-child(1) {
+            background-color: var(--primary-light);
+            animation-delay: 0.1s;
+        }
+
+        .feature-card:nth-child(2) {
+            background-color: var(--warning-light);
+            animation-delay: 0.2s;
+        }
+
+        .feature-card:nth-child(3) {
+            background-color: #F5E1FF;
+            animation-delay: 0.3s;
+        }
+
+        .feature-card:nth-child(4) {
+            background-color: var(--success-light);
+            animation-delay: 0.4s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover::before {
+            transform: scale(3);
+        }
+
+        .feature-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 1rem;
+        }
+
+        .feature-icon i {
+            font-size: 1.25rem;
+            color: var(--gray-800);
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        .feature-card p {
+            margin-bottom: 1.5rem;
+            color: var(--gray-600);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            border: none;
+            outline: none;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin-top: auto;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: var(--success-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-purple {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-purple:hover {
+            background-color: var(--secondary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-warning {
+            background-color: var(--warning);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background-color: var(--warning-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-lg {
+            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+        }
+
+        .calm-zone {
+            text-align: center;
+            margin: 3rem 0;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--success-light), #E0FFF4);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transform-origin: center;
+            animation: pulse 2s infinite;
+        }
+
+        .calm-zone a {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 2rem;
+            font-size: 0.90rem;
+            font-weight: 600;
+        }
+
+        .calm-zone i {
+            margin-right: 0.5rem;
+            font-size:small;
+        }
+
+        .stories-section {
+            margin-top: 3rem;
+        }
+
+        .stories-section h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.75rem;
+            color: var(--gray-800);
+            position: relative;
+            display: inline-block;
+        }
+
+        .stories-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .story-card {
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .story-card:nth-child(1) { animation-delay: 0.3s; }
+        .story-card:nth-child(2) { animation-delay: 0.4s; }
+        .story-card:nth-child(3) { animation-delay: 0.5s; }
+
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .story-image {
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .story-card:hover .story-image img {
+            transform: scale(1.05);
+        }
+
+        .story-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+        }
+
+        .story-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .story-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--gray-900);
+        }
+
+        .story-position {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .story-text {
+            color: var(--gray-700);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, margin-top 0.3s ease;
+        }
+
+        .story-text.expanded {
+            max-height: 500px;
+            margin-top: 1rem;
+        }
+
+        .story-actions {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .read-more {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 0;
+            font-size: 0.875rem;
+        }
+
+        .read-more:hover {
+            color: var(--primary-dark);
+        }
+
+        .read-more i {
+            margin-left: 0.25rem;
+            transition: transform 0.3s ease;
+        }
+
+        .read-more.expanded i {
+            transform: rotate(180deg);
+        }
+
+        .video-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary);
+            font-size: 0.875rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .video-link:hover {
+            color: var(--primary-dark);
+        }
+
+        .video-link i {
+            margin-right: 0.25rem;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(15deg);
+        }
+
+        .theme-toggle i {
+            font-size: 1.25rem;
+            color: var(--gray-800);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-5px);
+        }
+
+        /* Dark Theme Styles */
+        body.dark-theme {
+            background-color: var(--gray-900);
+            color: var(--gray-100);
+        }
+
+        body.dark-theme .header h1 {
+            background: linear-gradient(135deg, #60A5FA, #A78BFA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        body.dark-theme .header p {
+            color: var(--gray-300);
+        }
+
+        body.dark-theme .feature-card {
+            background-color: var(--gray-800);
+        }
+
+        body.dark-theme .feature-card:nth-child(1) {
+            background-color: rgba(59, 130, 246, 0.2);
+        }
+
+        body.dark-theme .feature-card:nth-child(2) {
+            background-color: rgba(245, 158, 11, 0.2);
+        }
+
+        body.dark-theme .feature-card:nth-child(3) {
+            background-color: rgba(139, 92, 246, 0.2);
+        }
+
+        body.dark-theme .feature-card:nth-child(4) {
+            background-color: rgba(16, 185, 129, 0.2);
+        }
+
+        body.dark-theme .feature-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-theme .feature-icon i {
+            color: var(--gray-300);
+        }
+
+        body.dark-theme .feature-card h3 {
+            color: var(--gray-100);
+        }
+
+        body.dark-theme .feature-card p {
+            color: var(--gray-400);
+        }
+
+        body.dark-theme .calm-zone {
+            background: linear-gradient(100deg, rgba(149, 243, 211, 0.2), rgba(116, 203, 174, 0.1));
+        }
+
+        body.dark-theme .stories-section h2 {
+            color: var(--gray-100);
+        }
+
+        body.dark-theme .story-card {
+            background-color: var(--gray-800);
+        }
+
+        body.dark-theme .story-name {
+            color: var(--gray-100);
+        }
+
+        body.dark-theme .story-position {
+            color: var(--gray-400);
+        }
+
+        body.dark-theme .story-text {
+            color: var(--gray-300);
+        }
+
+        body.dark-theme .theme-toggle {
+            background: var(--gray-800);
+        }
+
+        body.dark-theme .theme-toggle i {
+            color: var(--gray-200);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.02);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .features-grid, .stories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="theme-toggle" id="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <a href="#" class="back-to-top" id="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <div class="container">
+        <div class="header">
+            <h1>Welcome to Your Career Dashboard</h1>
+            <p>Your one-stop destination for placement preparation</p>
+        </div>
+
+        <div class="features-grid">
     <!-- AI Interview Practice -->
-    <div class="col-sm-6 col-md-4">
-      <div class="card h-100 shadow-sm border-0 p-4 bg-light">
-        <h3>🎤 AI Interview Practice</h3>
-        <p>Practice real interview questions with voice.</p>
-        <a href="{% url 'voice_interview' %}" class="btn btn-primary mt-3">Start Practicing</a>
-      </div>
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-microphone"></i>
+        </div>
+        <h3>AI Interview Practice</h3>
+        <p>Practice real interview questions with voice recognition technology. Get instant feedback and improve your skills.</p>
+        <a href="{% url 'voice_interview' %}" class="btn btn-primary">Start Practicing</a>
     </div>
 
     <!-- Latest Opportunities -->
-    <div class="col-sm-6 col-md-4">
-      <div class="card h-100 shadow-sm border-0 p-4" style="background-color: #fff8dc;">
-        <h3>📢 Latest Opportunities</h3>
-        <p>Get the newest job/internship alerts.</p>
-        <a href="{% url 'latest_opportunities' %}" class="btn btn-success mt-3">View Now</a>
-      </div>
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-bullhorn"></i>
+        </div>
+        <h3>Latest Opportunities</h3>
+        <p>Get the newest job and internship alerts customized for your profile and preferences.</p>
+        <a href="{% url 'latest_opportunities' %}" class="btn btn-success">View Now</a>
     </div>
 
     <!-- Resume Review -->
-    <div class="col-sm-6 col-md-4">
-      <div class="card h-100 shadow-sm border-0 p-4" style="background-color: #ffe6e6; text-align: center;">
-        <h3>📄 Resume Review</h3>
-        <p>Build a strong professional resume easily.</p>
-        <a href="{% url 'upload_resume' %}" class="btn btn-purple mt-3">Upload Your Resume</a>
-      </div>
-    </div>
-
-    <!-- Career Roadmaps -->
-    <div class="col-sm-6 col-md-4">
-      <div class="card h-100 shadow-sm border-0 p-4" style="background-color: #e6ffe6;">
-        <h3>🗺️ Career Roadmaps</h3>
-        <p>Plan your journey from beginner to expert.</p>
-        <a href="#" class="btn btn-warning mt-3 text-white">Explore</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="text-center my-5">
-    <a href="{% url 'calm_zone' %}" class="btn btn-success btn-lg px-5">
-      <span class="fs-3 me-2">🌿</span> Enter Calm Zone
-    </a>
-  </div>
-
-  <h2 class="text-center mb-4">🌟 Success Stories</h2>
-  <div class="row justify-content-center g-4">
-    {% for story in stories %}
-    <div class="col-sm-6 col-md-4">
-      <div class="card h-100 shadow-sm border-0 position-relative">
-        {% if story.image %}
-        <img src="{{ story.image.url }}" alt="{{ story.name }}" 
-             class="card-img-top rounded mx-auto d-block" 
-             style="height: 300px; width: 200px; object-fit: cover;">
-        {% endif %}
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title mb-1">{{ story.name }}</h5>
-          <p class="text-muted mb-1"><strong>{{ story.position }}</strong> @ {{ story.company }}</p>
-
-          <div class="collapse" id="story-{{ story.id }}">
-            <p class="card-text mt-2">{{ story.story }}</p>
-          </div>
-          <button class="btn btn-link p-0 mt-auto text-primary" type="button" data-bs-toggle="collapse" 
-                  data-bs-target="#story-{{ story.id }}" aria-expanded="false" aria-controls="story-{{ story.id }}">
-            Read Full Story
-          </button>
-
-          {% if story.video_link %}
-          <a href="{{ story.video_link }}" target="_blank" class="btn btn-sm btn-outline-primary mt-3">🎥 Watch Story</a>
-          {% endif %}
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-file-alt"></i>
         </div>
-      </div>
+        <h3>Resume Review</h3>
+        <p>Build a strong professional resume with AI-powered feedback and industry best practices.</p>
+        <a href="{% url 'resume_review' %}" class="btn btn-purple">Upload Your Resume</a>
     </div>
-    {% empty %}
-    <p class="text-muted text-center">No success stories yet. Be the first!</p>
-    {% endfor %}
-  </div>
 
+    
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-map-marked-alt"></i>
+        </div>
+        <h3>OpportunityLens</h3>
+        <p>Empowers users to precisely filter and discover the best job and internship opportunities tailored to their preferences</p>
+        <a href="{% url 'job_results' %}" class="btn btn-warning">Explore</a>
+    </div>
+    
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-graduation-cap"></i>
+        </div>
+        <h3>CalmZone</h3>
+        <p>A serene space designed to reduce stress and boost focus through guided mindfulness tools tailored for students.</p>
+        <a href="{% url 'calm_zone' %}" class="btn btn-warning">Explore</a>
+    </div>
+
+    
 </div>
-{% endblock %}
+
+<div class="calm-zone">
+    <a href="#" class="btn btn-success btn-lg">
+        <i class="fas fa-magic"></i> Empowering every student with clarity, confidence, and the right tools — because the journey from resume to recruitment deserves more than guesswork.
+    </a>
+</div>
+
+
+        <div class="stories-section">
+            <h2>Success Stories</h2>
+            <div class="stories-grid">
+                <!-- Story 1 -->
+                <div class="story-card">
+                    <div class="story-image">
+                        <img src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Sarah Johnson">
+                    </div>
+                    <div class="story-content">
+                        <h3 class="story-name">Sarah Johnson</h3>
+                        <p class="story-position"><strong>Software Engineer</strong> @ Google</p>
+                        <div class="story-text" id="story-1-text">
+                            After using the AI Interview practice for 3 weeks, I felt so much more confident in my technical interviews. The resume review helped me highlight my projects better. I'm now working at Google and loving every minute of it!
+                        </div>
+                        <div class="story-actions">
+                            <button class="read-more" data-story="story-1-text">
+                                Read Full Story <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="video-link">
+                                <i class="fas fa-video"></i> Watch Story
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 2 -->
+                <div class="story-card">
+                    <div class="story-image">
+                        <img src="https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Michael Chen">
+                    </div>
+                    <div class="story-content">
+                        <h3 class="story-name">Michael Chen</h3>
+                        <p class="story-position"><strong>Product Manager</strong> @ Microsoft</p>
+                        <div class="story-text" id="story-2-text">
+                            The career roadmap was invaluable in helping me transition from engineering to product management. The structured approach and resources recommended were spot on. I landed my dream role at Microsoft after just 6 months of focused preparation.
+                        </div>
+                        <div class="story-actions">
+                            <button class="read-more" data-story="story-2-text">
+                                Read Full Story <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story 3 -->
+                <div class="story-card">
+                    <div class="story-image">
+                        <img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Priya Sharma">
+                    </div>
+                    <div class="story-content">
+                        <h3 class="story-name">Priya Sharma</h3>
+                        <p class="story-position"><strong>Data Scientist</strong> @ Amazon</p>
+                        <div class="story-text" id="story-3-text">
+                            As someone with anxiety, the Calm Zone helped me manage interview stress effectively. The AI practice interviews built my confidence gradually. Amazon was my first choice, and I couldn't believe it when I got the offer!
+                        </div>
+                        <div class="story-actions">
+                            <button class="read-more" data-story="story-3-text">
+                                Read Full Story <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="video-link">
+                                <i class="fas fa-video"></i> Watch Story
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            
+            if (document.body.classList.contains('dark-theme')) {
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+        
+        // Check for saved theme
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+        }
+        
+        // Read More Toggle
+        const readMoreButtons = document.querySelectorAll('.read-more');
+        
+        readMoreButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const storyTextId = button.getAttribute('data-story');
+                const storyText = document.getElementById(storyTextId);
+                
+                storyText.classList.toggle('expanded');
+                button.classList.toggle('expanded');
+                
+                if (storyText.classList.contains('expanded')) {
+                    button.innerHTML = 'Show Less <i class="fas fa-chevron-up"></i>';
+                } else {
+                    button.innerHTML = 'Read Full Story <i class="fas fa-chevron-down"></i>';
+                }
+            });
+        });
+        
+        // Back to Top Button
+        const backToTop = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        
+        backToTop.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Animate Feature Cards on Scroll
+        const featureCards = document.querySelectorAll('.feature-card');
+        const storyCards = document.querySelectorAll('.story-card');
+        
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        // Set initial state for animation
+        featureCards.forEach(card => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(20px)';
+            observer.observe(card);
+        });
+        
+        storyCards.forEach(card => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(20px)';
+            observer.observe(card);
+        });
+    </script>
+    <footer class="site-footer">
+  <div class="container">
+    <p>© 2025 PlaceMate!                All rights reserved.            Made with :-) </p>
+  </div>
+</footer>
+</body>
+</html>

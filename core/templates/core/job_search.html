@@ -1,0 +1,103 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+<style>
+  body {
+    background-color: #020204; /* Same dark background */
+    font-family: 'Poppins', sans-serif;
+    color: #e2e8f0;
+  }
+
+  .job-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    padding: 2rem;
+  }
+
+  .job-form {
+    background-color: #1e293b;
+    padding: 2.5rem;
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .job-form h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #f8fafc;
+    font-weight: 600;
+  }
+
+  .form-label {
+    color: #cbd5e1;
+    margin-bottom: 0.5rem;
+    display: block;
+    font-size: 0.95rem;
+  }
+
+  .form-control,
+  .form-select {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border-radius: 0.5rem;
+    background-color: #334155;
+    border: 1px solid #475569;
+    color: #e2e8f0;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .form-control::placeholder {
+    color: #94a3b8;
+  }
+
+  .form-control:focus,
+  .form-select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #3b82f6;
+    color: #ffffff;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.5rem;
+    transition: background 0.3s ease;
+  }
+
+  .btn-submit:hover {
+    background-color: #2563eb;
+  }
+</style>
+
+<div class="job-form-container">
+  <form method="POST" class="job-form">
+    {% csrf_token %}
+    <h2>Find Jobs & Internships</h2>
+
+    <label for="role" class="form-label">Role</label>
+    <input type="text" id="role" name="role" class="form-control" placeholder="e.g. Python Developer" required>
+
+    <label for="job_type" class="form-label">Job Type</label>
+    <select id="job_type" name="job_type" class="form-select" required>
+      <option value="" disabled selected>Select Job Type</option>
+      <option value="intern">Internship</option>
+      <option value="job">Full-time</option>
+    </select>
+
+    <label for="location" class="form-label">Location (Optional)</label>
+    <input type="text" id="location" name="location" class="form-control" placeholder="e.g. Remote or Delhi">
+
+    <button type="submit" class="btn-submit">Search Opportunities</button>
+  </form>
+</div>
+
+{% endblock %}

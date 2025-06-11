@@ -1,0 +1,118 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+<!-- Custom CSS Styling -->
+<style>
+  body {
+    background: linear-gradient(to right, hsl(0, 0%, 4%), hsl(240, 3%, 7%), #0c0c0c);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .results-header {
+    color: #fff;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    text-align: center;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+
+  .card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: #fff;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  .card h5 {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 0.75rem;
+  }
+
+  .card p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 0.4rem;
+  }
+
+  .btn-success {
+    border-radius: 30px;
+    padding: 0.5rem 1.4rem;
+    font-weight: 600;
+    background: linear-gradient(to right, #126bc0, #0d47a1);
+    border: none;
+    color: white;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-success:hover {
+    background: linear-gradient(to right, #00e676, #76ff03);
+    transform: scale(1.05);
+    color: #000;
+  }
+
+  .alert-warning {
+    background-color: rgba(255, 193, 7, 0.1);
+    border-left: 5px solid #ffc107;
+    color: #fff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  @media (max-width: 576px) {
+    .results-header {
+      font-size: 1.4rem;
+    }
+
+    .card {
+      padding: 1rem;
+    }
+  }
+</style>
+
+<div class="container py-5">
+  <h3 class="results-header">
+    🎯 Results for "{{ role }}" - {{ job_type|title }}
+    {% if remote %} | {{ remote|title }}{% endif %}
+    {% if location %} | Location: {{ location }}{% endif %}
+    {% if min_salary %} | Min Salary: ${{ min_salary }}{% endif %}
+  </h3>
+
+  {% if jobs %}
+    <div class="row g-4">
+      {% for job in jobs %}
+        <div class="col-lg-6">
+          <div class="card">
+            <h5>{{ job.job_title }}</h5>
+            <p><strong>Company:</strong> {{ job.employer_name }}</p>
+            <p><strong>Location:</strong> {{ job.job_city }}, {{ job.job_country }}</p>
+            <p>{{ job.job_description|slice:":100" }}...</p>
+            <a href="{{ job.job_apply_link }}" target="_blank" class="btn btn-success mt-3">Apply</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-warning">
+      🚫 No results found. Try a different role or job type.
+    </div>
+  {% endif %}
+</div>
+
+{% endblock %}
